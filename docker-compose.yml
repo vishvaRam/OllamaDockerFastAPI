@@ -1,0 +1,42 @@
+version: "3.8"
+
+services:
+  web:
+    build: ./FastAPI
+    container_name: web
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./FastAPI:/app
+    networks:
+      - ollama-net
+
+  ollama:
+    build: ./Ollama
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - /mnt/Data/Data Science/PythonModels/OllamaModels:/root/.ollama
+    networks:
+      - ollama-net
+    entrypoint: ["usr/bin/bash","/start-ollama.sh"]
+    
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+
+networks:
+  ollama-net:
+    driver: bridge
+
+volumes:
+  ollama-vol:
+    driver: local
