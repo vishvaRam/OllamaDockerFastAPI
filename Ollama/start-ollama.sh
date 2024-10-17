@@ -6,8 +6,8 @@ pid=$!
 sleep 5
 
 
-echo "Pulling llama3.2:1b model"
-ollama pull llama3.2:1b
+echo "Pulling qwen2.5:0.5b model"
+ollama pull qwen2.5:0.5b
 
 
 wait $pid

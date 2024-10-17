@@ -10,6 +10,7 @@ services:
       - ./FastAPI:/app
     networks:
       - ollama-net
+    
 
   ollama:
     build: ./Ollama
@@ -17,7 +18,7 @@ services:
     ports:
       - "11434:11434"
     volumes:
-      - /mnt/Data/Data Science/PythonModels/OllamaModels:/root/.ollama
+      - ./OllamaModels:/root/.ollama
     networks:
       - ollama-net
     entrypoint: ["usr/bin/bash","/start-ollama.sh"]
